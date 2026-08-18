@@ -2,8 +2,11 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>لعبة الكنز</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -110,15 +113,15 @@
             <div id="screen-win" class="win-screen hidden">
                 <div class="win-content">
                     <span class="win-icon">🏆</span>
-                    <h1>مبروك!</h1>
+                    <h1>CHAMPION</h1>
                     <p id="win-team-name" class="win-team"></p>
-                    <p>وصلت إلى الكنز!</p>
+                    <p class="win-subtitle">وصل إلى الكنز!</p>
                     <div class="treasure-location">
-                        <p>الساعة الرملية في:</p>
+                        <p>الكنز في</p>
                         <p id="treasure-place" class="treasure-place"></p>
                     </div>
                     <div class="completion-time">
-                        <p>وقت الإنجاز:</p>
+                        <p>وقت الإنجاز</p>
                         <p id="completion-time" class="time-display"></p>
                     </div>
                     <button id="btn-play-again" class="btn btn-primary">لعبة جديدة</button>

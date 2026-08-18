@@ -112,19 +112,41 @@ const UI = {
         el.style.color = teamColor;
     },
 
-    // تأثيرات الاحتفال
+    // تأثيرات الاحتفال - جسيمات متطايرة
     celebrate() {
-        const colors = ['#FFD700', '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4'];
-        for (let i = 0; i < 50; i++) {
+        const colors = ['#00ff88', '#ffd700', '#ff3366', '#3366ff', '#9933ff'];
+        const shapes = ['circle', 'square', 'triangle'];
+        
+        for (let i = 0; i < 80; i++) {
             setTimeout(() => {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                document.body.appendChild(confetti);
-                setTimeout(() => confetti.remove(), 4000);
-            }, i * 50);
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                particle.style.animationDelay = (Math.random() * 0.5) + 's';
+                
+                // أشكال متنوعة
+                const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                if (shape === 'circle') {
+                    particle.style.borderRadius = '50%';
+                    particle.style.width = (Math.random() * 8 + 4) + 'px';
+                    particle.style.height = particle.style.width;
+                } else if (shape === 'square') {
+                    particle.style.width = (Math.random() * 8 + 4) + 'px';
+                    particle.style.height = particle.style.width;
+                } else {
+                    particle.style.width = '0';
+                    particle.style.height = '0';
+                    particle.style.borderLeft = '5px solid transparent';
+                    particle.style.borderRight = '5px solid transparent';
+                    particle.style.borderBottom = '10px solid ' + particle.style.background;
+                    particle.style.background = 'transparent';
+                }
+                
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 5000);
+            }, i * 30);
         }
     },
 
@@ -135,5 +157,42 @@ const UI = {
         setTimeout(() => {
             el.style.animation = 'shake 0.5s ease';
         }, 10);
+    },
+
+    // تأثير نبض البطاقة
+    pulseCard() {
+        const card = document.querySelector('.riddle-card');
+        if (card) {
+            card.style.animation = 'none';
+            setTimeout(() => {
+                card.style.animation = 'cardPulse 2s ease-in-out';
+            }, 10);
+        }
+    },
+
+    // تأثير ظهور تدريجي
+    fadeIn(elementId) {
+        const el = document.getElementById(elementId);
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.classList.remove('hidden');
+        
+        setTimeout(() => {
+            el.style.transition = 'all 0.4s ease';
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        }, 50);
+    },
+
+    // تأثير اختفاء
+    fadeOut(elementId) {
+        const el = document.getElementById(elementId);
+        el.style.transition = 'all 0.3s ease';
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(-20px)';
+        
+        setTimeout(() => {
+            el.classList.add('hidden');
+        }, 300);
     }
 };

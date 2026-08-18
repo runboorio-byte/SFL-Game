@@ -5,29 +5,61 @@
 }
 
 :root {
-    --primary: #8B4513;
-    --primary-light: #D2691E;
-    --gold: #FFD700;
-    --gold-dark: #B8860B;
-    --success: #228B22;
-    --error: #DC143C;
-    --bg-gradient: linear-gradient(135deg, #1a0a00 0%, #2d1810 50%, #1a0a00 100%);
-    --card-bg: rgba(139, 69, 19, 0.15);
-    --card-border: rgba(255, 215, 0, 0.3);
+    --bg-dark: #0a0a0f;
+    --bg-card: #12121a;
+    --bg-card-hover: #1a1a25;
+    --accent: #00ff88;
+    --accent-glow: rgba(0, 255, 136, 0.3);
+    --gold: #ffd700;
+    --gold-glow: rgba(255, 215, 0, 0.3);
+    --red: #ff3366;
+    --blue: #3366ff;
+    --purple: #9933ff;
+    --green: #00ff88;
+    --yellow: #ffcc00;
+    --text: #ffffff;
+    --text-dim: #8888aa;
+    --border: rgba(255, 255, 255, 0.1);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Orbitron:wght@700;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: var(--bg-gradient);
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg-dark);
     min-height: 100vh;
-    color: #F5DEB3;
+    color: var(--text);
     direction: rtl;
+    overflow-x: hidden;
+}
+
+/* خلفية متحركة */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(ellipse at 20% 20%, rgba(0, 255, 136, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(255, 51, 102, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(51, 102, 255, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
 }
 
 .screen {
     display: none;
     min-height: 100vh;
-    padding: 20px;
+    min-height: 100dvh;
+    padding: 16px;
 }
 
 .screen.active {
@@ -37,129 +69,203 @@ body {
 }
 
 .container {
-    max-width: 500px;
+    max-width: 480px;
     width: 100%;
     margin: 0 auto;
 }
 
-/* Logo */
+/* الشعار */
 .logo {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 32px;
 }
 
 .treasure-icon {
-    font-size: 64px;
+    font-size: 72px;
     display: block;
-    margin-bottom: 10px;
-    animation: float 3s ease-in-out infinite;
+    margin-bottom: 12px;
+    animation: float 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-12px) scale(1.05); }
 }
 
 .logo h1 {
-    font-size: 36px;
-    color: var(--gold);
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    margin-bottom: 5px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 42px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 50%, #ffd700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
 }
 
 .subtitle {
-    color: #DEB887;
+    color: var(--text-dim);
     font-size: 16px;
+    font-weight: 600;
 }
 
-/* Login Box */
+/* صندوق الدخول */
 .login-box {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 15px;
-    padding: 25px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 24px;
     margin-bottom: 20px;
-    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.login-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--blue), var(--purple));
 }
 
 .login-box label {
     display: block;
-    margin-bottom: 10px;
-    color: var(--gold);
-    font-weight: bold;
+    margin-bottom: 12px;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 .login-box input {
     width: 100%;
-    padding: 15px;
-    font-size: 18px;
-    border: 2px solid var(--card-border);
-    border-radius: 10px;
-    background: rgba(0,0,0,0.3);
-    color: white;
+    padding: 18px;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'Orbitron', sans-serif;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.4);
+    color: var(--accent);
     text-align: center;
-    letter-spacing: 3px;
-    margin-bottom: 15px;
+    letter-spacing: 4px;
+    margin-bottom: 16px;
     direction: ltr;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
 }
 
 .login-box input:focus {
     outline: none;
-    border-color: var(--gold);
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    border-color: var(--accent);
+    box-shadow: 0 0 30px var(--accent-glow);
 }
 
-/* Buttons */
+.login-box input::placeholder {
+    color: var(--text-dim);
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+/* الأزرار */
 .btn {
-    padding: 12px 30px;
+    padding: 16px 32px;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 700;
+    font-family: 'Cairo', sans-serif;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
     width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn:hover::after {
+    left: 100%;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
-    color: #1a0a00;
+    background: linear-gradient(135deg, var(--accent) 0%, #00cc6a 100%);
+    color: #000;
+    box-shadow: 0 4px 20px var(--accent-glow);
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 40px var(--accent-glow);
+}
+
+.btn-primary:active {
+    transform: translateY(-1px);
 }
 
 .btn-check {
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    background: linear-gradient(135deg, var(--blue) 0%, #2244cc 100%);
     color: white;
+    box-shadow: 0 4px 20px rgba(51, 102, 255, 0.3);
+    min-width: 120px;
 }
 
 .btn-check:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(139, 69, 19, 0.4);
+    box-shadow: 0 8px 30px rgba(51, 102, 255, 0.4);
 }
 
 .btn-final {
-    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
-    font-size: 20px;
-    padding: 15px 40px;
+    background: linear-gradient(135deg, var(--gold) 0%, #ffaa00 100%);
+    color: #000;
+    font-size: 18px;
+    padding: 18px 48px;
+    box-shadow: 0 4px 30px var(--gold-glow);
 }
 
-/* Team Info */
+/* معلومات الفرق */
 .team-info {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 15px;
-    padding: 20px;
-    backdrop-filter: blur(10px);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+}
+
+.team-info::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--yellow), var(--red), var(--purple), var(--blue), var(--green));
 }
 
 .team-info h3 {
     text-align: center;
-    color: var(--gold);
-    margin-bottom: 15px;
+    color: var(--text);
+    margin-bottom: 16px;
+    font-size: 16px;
+    font-weight: 700;
 }
 
 .codes-grid {
@@ -169,33 +275,57 @@ body {
 }
 
 .code-item {
-    background: rgba(0,0,0,0.3);
+    background: rgba(0, 0, 0, 0.3);
     border: 2px solid var(--team-color);
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: 12px;
+    padding: 12px 8px;
     text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.code-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--team-color);
+    opacity: 0.1;
+}
+
+.code-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
 }
 
 .code-item .code {
     display: block;
-    font-size: 18px;
-    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
     color: var(--team-color);
     direction: ltr;
     letter-spacing: 2px;
+    margin-bottom: 4px;
 }
 
 .code-item .name {
-    font-size: 12px;
-    color: #DEB887;
+    font-size: 11px;
+    color: var(--text-dim);
+    font-weight: 600;
 }
 
-/* Error/Success Text */
+/* رسائل الخطأ والنجاح */
 .error-text {
-    color: var(--error);
+    color: var(--red);
     text-align: center;
-    margin-top: 10px;
+    margin-top: 12px;
     display: none;
+    font-weight: 600;
+    font-size: 14px;
 }
 
 .error-text.show {
@@ -204,10 +334,12 @@ body {
 }
 
 .success-text {
-    color: var(--success);
+    color: var(--accent);
     text-align: center;
-    margin-top: 10px;
+    margin-top: 12px;
     display: none;
+    font-weight: 600;
+    font-size: 14px;
 }
 
 .success-text.show {
@@ -216,219 +348,261 @@ body {
 
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-5px); }
-    40%, 80% { transform: translateX(5px); }
+    20%, 60% { transform: translateX(-8px); }
+    40%, 80% { transform: translateX(8px); }
 }
 
-/* Progress Bar */
+/* شريط التقدم */
 .progress-bar {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 15px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
     padding: 20px;
-    margin-bottom: 20px;
-    backdrop-filter: blur(10px);
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
 }
 
 .progress-info {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
-    font-size: 14px;
+    margin-bottom: 12px;
+    font-size: 13px;
 }
 
 .progress-info span:first-child {
-    color: var(--gold);
-    font-weight: bold;
+    color: var(--accent);
+    font-weight: 700;
+}
+
+.progress-info span:last-child {
+    color: var(--text-dim);
 }
 
 .progress-track {
-    height: 8px;
-    background: rgba(0,0,0,0.3);
-    border-radius: 4px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
     overflow: hidden;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
 }
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+    background: linear-gradient(90deg, var(--accent), #00cc6a);
     width: 0%;
     transition: width 0.5s ease;
+    box-shadow: 0 0 10px var(--accent-glow);
 }
 
 .station-dots {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 4px;
 }
 
 .dot {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    background: rgba(0,0,0,0.3);
-    border: 2px solid var(--card-border);
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: 700;
     transition: all 0.3s ease;
+    color: var(--text-dim);
 }
 
 .dot.active {
-    background: var(--gold);
-    color: #1a0a00;
-    border-color: var(--gold);
-    transform: scale(1.1);
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+    transform: scale(1.15);
+    box-shadow: 0 0 20px var(--accent-glow);
 }
 
 .dot.completed {
-    background: var(--success);
-    border-color: var(--success);
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+    opacity: 0.7;
 }
 
 .dot-final {
-    font-size: 16px;
+    font-size: 14px;
+    background: linear-gradient(135deg, var(--gold), #ffaa00);
+    border-color: var(--gold);
+    color: #000;
 }
 
-/* Riddle Card */
+/* بطاقات الألغاز */
 .riddle-card, .location-card, .final-riddle-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     border-radius: 20px;
     overflow: hidden;
-    backdrop-filter: blur(10px);
+    position: relative;
 }
 
 .card-header {
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
-    padding: 20px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    padding: 24px 20px;
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 16px;
+    border-bottom: 1px solid var(--border);
 }
 
 .station-badge {
-    width: 40px;
-    height: 40px;
-    background: var(--gold);
-    color: #1a0a00;
-    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--accent), #00cc6a);
+    color: #000;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
-    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    box-shadow: 0 4px 15px var(--accent-glow);
 }
 
 .final-header {
-    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    background: linear-gradient(135deg, #2a1a00 0%, #1a1000 100%);
+    border-bottom-color: var(--gold);
 }
 
 .final-badge {
-    width: 40px;
-    height: 40px;
-    background: var(--primary);
-    color: var(--gold);
-    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--gold), #ffaa00);
+    color: #000;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 24px;
+    box-shadow: 0 4px 20px var(--gold-glow);
 }
 
 .card-header h2 {
-    color: white;
+    color: var(--text);
     font-size: 20px;
+    font-weight: 700;
 }
 
 .card-body {
-    padding: 25px;
+    padding: 24px 20px;
 }
 
 .riddle-text {
-    font-size: 22px;
+    font-size: 20px;
     line-height: 1.8;
     text-align: center;
-    color: #F5DEB3;
-    margin-bottom: 25px;
+    color: var(--text);
+    margin-bottom: 28px;
     padding: 20px;
-    background: rgba(0,0,0,0.2);
-    border-radius: 10px;
-    border-right: 4px solid var(--gold);
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 14px;
+    border-right: 4px solid var(--accent);
+    font-weight: 600;
 }
 
 .final-text {
     font-size: 18px;
     border-right-color: var(--gold);
+    white-space: pre-line;
 }
 
-/* Answer Section */
+/* قسم الإجابة */
 .answer-section, .code-input-section {
     display: flex;
-    gap: 10px;
+    gap: 12px;
 }
 
 .answer-section input, .code-input-section input {
     flex: 1;
-    padding: 15px;
+    padding: 16px;
     font-size: 18px;
-    border: 2px solid var(--card-border);
-    border-radius: 10px;
-    background: rgba(0,0,0,0.3);
-    color: white;
+    font-weight: 700;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--text);
     text-align: center;
+    transition: all 0.3s ease;
 }
 
 .answer-section input:focus, .code-input-section input:focus {
     outline: none;
-    border-color: var(--gold);
+    border-color: var(--accent);
+    box-shadow: 0 0 20px var(--accent-glow);
 }
 
-/* Location Card */
+/* بطاقة الموقع */
 .check-icon {
-    width: 40px;
-    height: 40px;
-    background: var(--success);
-    color: white;
-    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--accent), #00cc6a);
+    color: #000;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 28px;
+    font-weight: 900;
+    box-shadow: 0 4px 20px var(--accent-glow);
 }
 
 .location-instruction {
     text-align: center;
-    color: #DEB887;
-    margin-bottom: 10px;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+    font-size: 14px;
 }
 
 .location-name {
     text-align: center;
     font-size: 28px;
-    font-weight: bold;
-    color: var(--gold);
-    margin-bottom: 20px;
-    padding: 15px;
-    background: rgba(255, 215, 0, 0.1);
-    border-radius: 10px;
+    font-weight: 900;
+    color: var(--accent);
+    margin-bottom: 24px;
+    padding: 18px;
+    background: rgba(0, 255, 136, 0.1);
+    border-radius: 14px;
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 .code-instruction {
     text-align: center;
-    color: #DEB887;
-    margin-bottom: 15px;
-    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+    font-size: 13px;
 }
 
-/* Final Riddle */
+/* اللغز النهائي */
 .final-instruction {
     text-align: center;
-    color: #DEB887;
-    margin-bottom: 20px;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+    font-size: 14px;
 }
 
 .final-answer-section {
@@ -438,127 +612,225 @@ body {
 .answer-inputs {
     display: flex;
     justify-content: center;
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 16px;
+    margin-bottom: 24px;
 }
 
 .digit-input {
-    width: 60px;
-    height: 70px;
-    font-size: 28px;
+    width: 72px;
+    height: 80px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 32px;
+    font-weight: 900;
     text-align: center;
-    border: 3px solid var(--card-border);
-    border-radius: 10px;
-    background: rgba(0,0,0,0.3);
+    border: 3px solid var(--border);
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.4);
     color: var(--gold);
-    font-weight: bold;
     direction: ltr;
+    transition: all 0.3s ease;
 }
 
 .digit-input:focus {
     outline: none;
     border-color: var(--gold);
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    box-shadow: 0 0 30px var(--gold-glow);
+    transform: scale(1.05);
 }
 
-/* Win Screen */
+/* شاشة الفوز */
 .win-screen {
     text-align: center;
 }
 
 .win-content {
-    background: var(--card-bg);
+    background: var(--bg-card);
     border: 2px solid var(--gold);
-    border-radius: 20px;
-    padding: 40px;
-    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 40px 24px;
+    position: relative;
+    overflow: hidden;
+}
+
+.win-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+    pointer-events: none;
 }
 
 .win-icon {
-    font-size: 80px;
+    font-size: 100px;
     display: block;
     margin-bottom: 20px;
-    animation: pulse 1.5s ease-in-out infinite;
+    animation: winPulse 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 40px rgba(255, 215, 0, 0.6));
 }
 
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+@keyframes winPulse {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.1) rotate(-5deg); }
+    50% { transform: scale(1.2) rotate(0deg); }
+    75% { transform: scale(1.1) rotate(5deg); }
 }
 
 .win-content h1 {
-    font-size: 36px;
-    color: var(--gold);
-    margin-bottom: 10px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 42px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 50%, #ffd700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
 }
 
 .win-team {
-    font-size: 24px;
+    font-size: 22px;
     color: var(--gold);
-    margin-bottom: 10px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.win-subtitle {
+    color: var(--text-dim);
+    font-size: 16px;
+    margin-bottom: 24px;
 }
 
 .treasure-location {
     background: rgba(255, 215, 0, 0.1);
-    border: 1px solid var(--gold);
-    border-radius: 15px;
-    padding: 20px;
-    margin: 20px 0;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 16px;
+    padding: 24px;
+    margin: 24px 0;
+}
+
+.treasure-location p:first-child {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin-bottom: 8px;
 }
 
 .treasure-place {
-    font-size: 24px;
-    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
     color: var(--gold);
-    margin-top: 10px;
 }
 
 .completion-time {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+}
+
+.completion-time p:first-child {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin-bottom: 8px;
 }
 
 .time-display {
+    font-family: 'Orbitron', sans-serif;
     font-size: 28px;
-    font-weight: bold;
-    color: var(--gold);
+    font-weight: 900;
+    color: var(--accent);
 }
 
-/* Hidden */
+/* المخفي */
 .hidden {
     display: none !important;
 }
 
-/* Responsive */
-@media (max-width: 480px) {
+/* المتجاوب */
+@media (max-width: 400px) {
+    .screen {
+        padding: 12px;
+    }
+    
     .logo h1 {
-        font-size: 28px;
+        font-size: 32px;
+    }
+    
+    .treasure-icon {
+        font-size: 56px;
+    }
+    
+    .login-box, .team-info, .progress-bar {
+        padding: 20px 16px;
     }
     
     .riddle-text {
+        font-size: 17px;
+        padding: 16px;
+    }
+    
+    .station-badge {
+        width: 40px;
+        height: 40px;
         font-size: 18px;
     }
     
+    .card-header h2 {
+        font-size: 17px;
+    }
+    
+    .location-name {
+        font-size: 22px;
+    }
+    
     .digit-input {
-        width: 50px;
-        height: 60px;
-        font-size: 24px;
+        width: 60px;
+        height: 68px;
+        font-size: 26px;
     }
     
     .codes-grid {
         grid-template-columns: 1fr;
     }
+    
+    .code-item {
+        padding: 14px;
+    }
+    
+    .code-item .code {
+        font-size: 18px;
+    }
+    
+    .win-content h1 {
+        font-size: 32px;
+    }
+    
+    .win-icon {
+        font-size: 80px;
+    }
 }
 
-/* Confetti Animation */
-.confetti {
+@media (min-width: 401px) and (max-width: 480px) {
+    .logo h1 {
+        font-size: 38px;
+    }
+    
+    .codes-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* تأثير الجسيمات */
+.particle {
     position: fixed;
-    width: 10px;
-    height: 10px;
-    background: var(--gold);
-    animation: confetti-fall 3s linear forwards;
+    width: 4px;
+    height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particleFall 3s linear forwards;
 }
 
-@keyframes confetti-fall {
+@keyframes particleFall {
     0% {
         transform: translateY(-100vh) rotate(0deg);
         opacity: 1;
@@ -566,5 +838,45 @@ body {
     100% {
         transform: translateY(100vh) rotate(720deg);
         opacity: 0;
+    }
+}
+
+/* تأثير النبض للبطاقات */
+@keyframes cardPulse {
+    0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+    50% { box-shadow: 0 0 30px 10px var(--accent-glow); }
+}
+
+.riddle-card {
+    animation: cardPulse 3s ease-in-out infinite;
+}
+
+/* تأثير التأكد */
+@keyframes confirmPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+.location-card {
+    animation: confirmPulse 2s ease-in-out infinite;
+}
+
+/* تحسين اللمس على الموبايل */
+@media (hover: none) {
+    .btn:hover {
+        transform: none;
+    }
+    
+    .btn:active {
+        transform: scale(0.98);
+    }
+    
+    .code-item:hover {
+        transform: none;
+    }
+    
+    .code-item:active {
+        transform: scale(0.95);
     }
 }
