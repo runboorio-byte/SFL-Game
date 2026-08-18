@@ -93,6 +93,13 @@ const Game = {
             this.captureTreasure();
         });
 
+        // زر الخروج من شاشة انتهاء اللعبة
+        document.getElementById('btn-exit-gameover').addEventListener('click', () => {
+            UI.showScreen('screen-start');
+            document.getElementById('team-code').value = '';
+            document.getElementById('game-over-screen').classList.add('hidden');
+        });
+
         // أزرار الأدمن
         document.getElementById('btn-reset-game').addEventListener('click', () => {
             this.resetGame();
@@ -112,10 +119,8 @@ const Game = {
     checkGameStatus() {
         const winner = localStorage.getItem('gameWinner');
         if (winner) {
-            // هناك فائز بالفعل
-            setTimeout(() => {
-                UI.showGameOver(winner);
-            }, 500);
+            // هناك فائز - لا نعرض شاشة انتهاء اللعبة تلقائياً
+            // بل نترك المستخدم يرى شاشة البداية ويمكنه الدخول بالكود السري
         }
     },
 
@@ -133,7 +138,7 @@ const Game = {
         // التحقق من وجود فائز
         const winner = localStorage.getItem('gameWinner');
         if (winner) {
-            UI.showError('error-msg', 'اللعبة انتهت! هناك فائز بالفعل.');
+            UI.showGameOver(winner);
             return;
         }
 
