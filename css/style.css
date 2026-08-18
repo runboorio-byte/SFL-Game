@@ -30,13 +30,19 @@
     box-sizing: border-box;
 }
 
+html {
+    height: 100%;
+    overflow: hidden;
+}
+
 body {
     font-family: 'Cairo', sans-serif;
     background: var(--bg-dark);
-    min-height: 100vh;
+    min-height: 100%;
+    height: 100%;
     color: var(--text);
     direction: rtl;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 /* خلفية متحركة */
@@ -57,45 +63,48 @@ body::before {
 
 .screen {
     display: none;
-    min-height: 100vh;
-    min-height: 100dvh;
-    padding: 16px;
+    height: 100vh;
+    height: 100dvh;
+    padding: 12px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
 }
 
 .screen.active {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
 }
 
 .container {
     max-width: 480px;
     width: 100%;
     margin: 0 auto;
+    min-height: 100%;
 }
 
 /* الشعار */
 .logo {
     text-align: center;
-    margin-bottom: 32px;
+    margin-bottom: 20px;
+    padding-top: 20px;
 }
 
 .treasure-icon {
-    font-size: 72px;
+    font-size: 56px;
     display: block;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     animation: float 2s ease-in-out infinite;
     filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
 }
 
 @keyframes float {
     0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-12px) scale(1.05); }
+    50% { transform: translateY(-10px) scale(1.05); }
 }
 
 .logo h1 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 42px;
+    font-size: 32px;
     font-weight: 900;
     background: linear-gradient(135deg, #ffd700 0%, #ff8c00 50%, #ffd700 100%);
     -webkit-background-clip: text;
@@ -103,12 +112,12 @@ body::before {
     background-clip: text;
     text-shadow: none;
     letter-spacing: 2px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .subtitle {
     color: var(--text-dim);
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
 }
 
@@ -116,9 +125,9 @@ body::before {
 .login-box {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 28px 24px;
-    margin-bottom: 20px;
+    border-radius: 16px;
+    padding: 20px 16px;
+    margin-bottom: 16px;
     position: relative;
     overflow: hidden;
 }
@@ -135,27 +144,27 @@ body::before {
 
 .login-box label {
     display: block;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     color: var(--accent);
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
 
 .login-box input {
     width: 100%;
-    padding: 18px;
-    font-size: 20px;
+    padding: 16px;
+    font-size: 18px;
     font-weight: 700;
     font-family: 'Orbitron', sans-serif;
     border: 2px solid var(--border);
-    border-radius: 12px;
+    border-radius: 10px;
     background: rgba(0, 0, 0, 0.4);
     color: var(--accent);
     text-align: center;
     letter-spacing: 4px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     direction: ltr;
     text-transform: uppercase;
     transition: all 0.3s ease;
@@ -169,18 +178,18 @@ body::before {
 
 .login-box input::placeholder {
     color: var(--text-dim);
-    font-size: 14px;
+    font-size: 13px;
     letter-spacing: 1px;
 }
 
 /* الأزرار */
 .btn {
-    padding: 16px 32px;
+    padding: 16px 24px;
     font-size: 16px;
     font-weight: 700;
     font-family: 'Cairo', sans-serif;
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
     width: 100%;
@@ -212,19 +221,20 @@ body::before {
 }
 
 .btn-primary:hover {
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     box-shadow: 0 8px 40px var(--accent-glow);
 }
 
 .btn-primary:active {
-    transform: translateY(-1px);
+    transform: scale(0.98);
 }
 
 .btn-check {
     background: linear-gradient(135deg, var(--blue) 0%, #2244cc 100%);
     color: white;
     box-shadow: 0 4px 20px rgba(51, 102, 255, 0.3);
-    min-width: 120px;
+    width: 100%;
+    margin-top: 10px;
 }
 
 .btn-check:hover {
@@ -235,19 +245,22 @@ body::before {
 .btn-final {
     background: linear-gradient(135deg, var(--gold) 0%, #ffaa00 100%);
     color: #000;
-    font-size: 18px;
-    padding: 18px 48px;
+    font-size: 16px;
+    padding: 16px 32px;
     box-shadow: 0 4px 30px var(--gold-glow);
+    width: 100%;
+    margin-top: 16px;
 }
 
 /* معلومات الفرق */
 .team-info {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 24px;
+    border-radius: 16px;
+    padding: 16px;
     position: relative;
     overflow: hidden;
+    margin-bottom: 20px;
 }
 
 .team-info::before {
@@ -263,22 +276,22 @@ body::before {
 .team-info h3 {
     text-align: center;
     color: var(--text);
-    margin-bottom: 16px;
-    font-size: 16px;
+    margin-bottom: 12px;
+    font-size: 14px;
     font-weight: 700;
 }
 
 .codes-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 8px;
 }
 
 .code-item {
     background: rgba(0, 0, 0, 0.3);
     border: 2px solid var(--team-color);
-    border-radius: 12px;
-    padding: 12px 8px;
+    border-radius: 10px;
+    padding: 10px 6px;
     text-align: center;
     transition: all 0.3s ease;
     position: relative;
@@ -296,24 +309,19 @@ body::before {
     opacity: 0.1;
 }
 
-.code-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
-}
-
 .code-item .code {
     display: block;
     font-family: 'Orbitron', sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     color: var(--team-color);
     direction: ltr;
-    letter-spacing: 2px;
-    margin-bottom: 4px;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
 }
 
 .code-item .name {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--text-dim);
     font-weight: 600;
 }
@@ -322,10 +330,10 @@ body::before {
 .error-text {
     color: var(--red);
     text-align: center;
-    margin-top: 12px;
+    margin-top: 10px;
     display: none;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .error-text.show {
@@ -336,10 +344,10 @@ body::before {
 .success-text {
     color: var(--accent);
     text-align: center;
-    margin-top: 12px;
+    margin-top: 10px;
     display: none;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .success-text.show {
@@ -356,9 +364,9 @@ body::before {
 .progress-bar {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 16px;
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 12px;
     position: relative;
     overflow: hidden;
 }
@@ -376,8 +384,8 @@ body::before {
 .progress-info {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 12px;
-    font-size: 13px;
+    margin-bottom: 10px;
+    font-size: 12px;
 }
 
 .progress-info span:first-child {
@@ -390,11 +398,11 @@ body::before {
 }
 
 .progress-track {
-    height: 6px;
+    height: 5px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 3px;
     overflow: hidden;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .progress-fill {
@@ -409,19 +417,19 @@ body::before {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 4px;
+    padding: 0 2px;
 }
 
 .dot {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.05);
     border: 2px solid rgba(255, 255, 255, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
     transition: all 0.3s ease;
     color: var(--text-dim);
@@ -443,7 +451,7 @@ body::before {
 }
 
 .dot-final {
-    font-size: 14px;
+    font-size: 12px;
     background: linear-gradient(135deg, var(--gold), #ffaa00);
     border-color: var(--gold);
     color: #000;
@@ -453,33 +461,34 @@ body::before {
 .riddle-card, .location-card, .final-riddle-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 20px;
+    border-radius: 16px;
     overflow: hidden;
     position: relative;
 }
 
 .card-header {
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    padding: 24px 20px;
+    padding: 16px;
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
     border-bottom: 1px solid var(--border);
 }
 
 .station-badge {
-    width: 48px;
-    height: 48px;
+    width: 42px;
+    height: 42px;
     background: linear-gradient(135deg, var(--accent), #00cc6a);
     color: #000;
-    border-radius: 14px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Orbitron', sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 900;
     box-shadow: 0 4px 15px var(--accent-glow);
+    flex-shrink: 0;
 }
 
 .final-header {
@@ -488,64 +497,67 @@ body::before {
 }
 
 .final-badge {
-    width: 48px;
-    height: 48px;
+    width: 42px;
+    height: 42px;
     background: linear-gradient(135deg, var(--gold), #ffaa00);
     color: #000;
-    border-radius: 14px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 20px;
     box-shadow: 0 4px 20px var(--gold-glow);
+    flex-shrink: 0;
 }
 
 .card-header h2 {
     color: var(--text);
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 700;
 }
 
 .card-body {
-    padding: 24px 20px;
+    padding: 16px;
 }
 
 .riddle-text {
-    font-size: 20px;
-    line-height: 1.8;
+    font-size: 17px;
+    line-height: 1.7;
     text-align: center;
     color: var(--text);
-    margin-bottom: 28px;
-    padding: 20px;
+    margin-bottom: 20px;
+    padding: 14px;
     background: rgba(255, 255, 255, 0.03);
-    border-radius: 14px;
-    border-right: 4px solid var(--accent);
+    border-radius: 12px;
+    border-right: 3px solid var(--accent);
     font-weight: 600;
 }
 
 .final-text {
-    font-size: 18px;
+    font-size: 15px;
     border-right-color: var(--gold);
     white-space: pre-line;
 }
 
-/* قسم الإجابة */
+/* قسم الإجابة - عمودي على الجوال */
 .answer-section, .code-input-section {
     display: flex;
-    gap: 12px;
+    flex-direction: column;
+    width: 100%;
 }
 
 .answer-section input, .code-input-section input {
-    flex: 1;
-    padding: 16px;
-    font-size: 18px;
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
     font-weight: 700;
     border: 2px solid var(--border);
-    border-radius: 12px;
+    border-radius: 10px;
     background: rgba(0, 0, 0, 0.3);
     color: var(--text);
     text-align: center;
     transition: all 0.3s ease;
+    margin-bottom: 0;
 }
 
 .answer-section input:focus, .code-input-section input:focus {
@@ -556,53 +568,54 @@ body::before {
 
 /* بطاقة الموقع */
 .check-icon {
-    width: 48px;
-    height: 48px;
+    width: 42px;
+    height: 42px;
     background: linear-gradient(135deg, var(--accent), #00cc6a);
     color: #000;
-    border-radius: 14px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 900;
     box-shadow: 0 4px 20px var(--accent-glow);
+    flex-shrink: 0;
 }
 
 .location-instruction {
     text-align: center;
     color: var(--text-dim);
-    margin-bottom: 12px;
-    font-size: 14px;
+    margin-bottom: 8px;
+    font-size: 13px;
 }
 
 .location-name {
     text-align: center;
-    font-size: 28px;
+    font-size: 22px;
     font-weight: 900;
     color: var(--accent);
-    margin-bottom: 24px;
-    padding: 18px;
+    margin-bottom: 16px;
+    padding: 14px;
     background: rgba(0, 255, 136, 0.1);
-    border-radius: 14px;
+    border-radius: 12px;
     border: 1px solid rgba(0, 255, 136, 0.3);
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 
 .code-instruction {
     text-align: center;
     color: var(--text-dim);
-    margin-bottom: 16px;
-    font-size: 13px;
+    margin-bottom: 12px;
+    font-size: 12px;
 }
 
 /* اللغز النهائي */
 .final-instruction {
     text-align: center;
     color: var(--text-dim);
-    margin-bottom: 24px;
-    font-size: 14px;
+    margin-bottom: 16px;
+    font-size: 13px;
 }
 
 .final-answer-section {
@@ -612,19 +625,19 @@ body::before {
 .answer-inputs {
     display: flex;
     justify-content: center;
-    gap: 16px;
-    margin-bottom: 24px;
+    gap: 12px;
+    margin-bottom: 16px;
 }
 
 .digit-input {
-    width: 72px;
-    height: 80px;
+    width: 64px;
+    height: 72px;
     font-family: 'Orbitron', sans-serif;
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 900;
     text-align: center;
     border: 3px solid var(--border);
-    border-radius: 14px;
+    border-radius: 12px;
     background: rgba(0, 0, 0, 0.4);
     color: var(--gold);
     direction: ltr;
@@ -646,8 +659,8 @@ body::before {
 .win-content {
     background: var(--bg-card);
     border: 2px solid var(--gold);
-    border-radius: 24px;
-    padding: 40px 24px;
+    border-radius: 20px;
+    padding: 28px 16px;
     position: relative;
     overflow: hidden;
 }
@@ -664,9 +677,9 @@ body::before {
 }
 
 .win-icon {
-    font-size: 100px;
+    font-size: 72px;
     display: block;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     animation: winPulse 1.5s ease-in-out infinite;
     filter: drop-shadow(0 0 40px rgba(255, 215, 0, 0.6));
 }
@@ -680,62 +693,62 @@ body::before {
 
 .win-content h1 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 42px;
+    font-size: 32px;
     font-weight: 900;
     background: linear-gradient(135deg, #ffd700 0%, #ff8c00 50%, #ffd700 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .win-team {
-    font-size: 22px;
+    font-size: 18px;
     color: var(--gold);
     font-weight: 700;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .win-subtitle {
     color: var(--text-dim);
-    font-size: 16px;
-    margin-bottom: 24px;
+    font-size: 14px;
+    margin-bottom: 16px;
 }
 
 .treasure-location {
     background: rgba(255, 215, 0, 0.1);
     border: 1px solid rgba(255, 215, 0, 0.3);
-    border-radius: 16px;
-    padding: 24px;
-    margin: 24px 0;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 16px 0;
 }
 
 .treasure-location p:first-child {
     color: var(--text-dim);
-    font-size: 14px;
-    margin-bottom: 8px;
+    font-size: 12px;
+    margin-bottom: 6px;
 }
 
 .treasure-place {
     font-family: 'Orbitron', sans-serif;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 900;
     color: var(--gold);
 }
 
 .completion-time {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 }
 
 .completion-time p:first-child {
     color: var(--text-dim);
-    font-size: 14px;
-    margin-bottom: 8px;
+    font-size: 12px;
+    margin-bottom: 6px;
 }
 
 .time-display {
     font-family: 'Orbitron', sans-serif;
-    font-size: 28px;
+    font-size: 22px;
     font-weight: 900;
     color: var(--accent);
 }
@@ -745,47 +758,70 @@ body::before {
     display: none !important;
 }
 
-/* المتجاوب */
-@media (max-width: 400px) {
+/* المتجاوب - جميع أحجام الشاشات */
+@media (max-width: 360px) {
     .screen {
-        padding: 12px;
+        padding: 8px;
     }
     
-    .logo h1 {
-        font-size: 32px;
+    .logo {
+        padding-top: 10px;
+        margin-bottom: 12px;
     }
     
     .treasure-icon {
-        font-size: 56px;
+        font-size: 48px;
+    }
+    
+    .logo h1 {
+        font-size: 26px;
+    }
+    
+    .subtitle {
+        font-size: 12px;
     }
     
     .login-box, .team-info, .progress-bar {
-        padding: 20px 16px;
+        padding: 14px 10px;
+        border-radius: 12px;
     }
     
     .riddle-text {
-        font-size: 17px;
-        padding: 16px;
+        font-size: 15px;
+        padding: 12px;
+    }
+    
+    .card-header {
+        padding: 12px;
     }
     
     .station-badge {
-        width: 40px;
-        height: 40px;
-        font-size: 18px;
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
     }
     
     .card-header h2 {
-        font-size: 17px;
+        font-size: 15px;
+    }
+    
+    .card-body {
+        padding: 12px;
     }
     
     .location-name {
-        font-size: 22px;
+        font-size: 18px;
+        padding: 12px;
     }
     
     .digit-input {
-        width: 60px;
-        height: 68px;
-        font-size: 26px;
+        width: 56px;
+        height: 64px;
+        font-size: 24px;
+    }
+    
+    .answer-inputs {
+        gap: 8px;
     }
     
     .codes-grid {
@@ -793,30 +829,106 @@ body::before {
     }
     
     .code-item {
-        padding: 14px;
+        padding: 8px;
     }
     
     .code-item .code {
-        font-size: 18px;
+        font-size: 16px;
     }
     
     .win-content h1 {
-        font-size: 32px;
+        font-size: 26px;
     }
     
     .win-icon {
-        font-size: 80px;
+        font-size: 60px;
+    }
+    
+    .win-content {
+        padding: 20px 12px;
     }
 }
 
-@media (min-width: 401px) and (max-width: 480px) {
+@media (min-width: 361px) and (max-width: 480px) {
     .logo h1 {
-        font-size: 38px;
+        font-size: 30px;
     }
     
-    .codes-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .treasure-icon {
+        font-size: 52px;
     }
+    
+    .riddle-text {
+        font-size: 16px;
+    }
+    
+    .digit-input {
+        width: 60px;
+        height: 68px;
+        font-size: 26px;
+    }
+}
+
+@media (min-width: 481px) {
+    .container {
+        max-width: 500px;
+    }
+    
+    .logo h1 {
+        font-size: 36px;
+    }
+    
+    .treasure-icon {
+        font-size: 60px;
+    }
+    
+    .riddle-text {
+        font-size: 18px;
+    }
+    
+    .digit-input {
+        width: 70px;
+        height: 78px;
+        font-size: 30px;
+    }
+}
+
+/* تحسين اللمس على الموبايل */
+@media (hover: none) {
+    .btn:hover {
+        transform: none;
+    }
+    
+    .btn:active {
+        transform: scale(0.97);
+    }
+    
+    .code-item:active {
+        transform: scale(0.95);
+    }
+    
+    .digit-input:active {
+        transform: scale(1.02);
+    }
+}
+
+/* تأكد من أن المحتوى لا يتجاوز الشاشة */
+.screen {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) transparent;
+}
+
+.screen::-webkit-scrollbar {
+    width: 4px;
+}
+
+.screen::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.screen::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 2px;
 }
 
 /* تأثير الجسيمات */
@@ -828,6 +940,7 @@ body::before {
     border-radius: 50%;
     pointer-events: none;
     animation: particleFall 3s linear forwards;
+    z-index: 1000;
 }
 
 @keyframes particleFall {
@@ -838,45 +951,5 @@ body::before {
     100% {
         transform: translateY(100vh) rotate(720deg);
         opacity: 0;
-    }
-}
-
-/* تأثير النبض للبطاقات */
-@keyframes cardPulse {
-    0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
-    50% { box-shadow: 0 0 30px 10px var(--accent-glow); }
-}
-
-.riddle-card {
-    animation: cardPulse 3s ease-in-out infinite;
-}
-
-/* تأثير التأكد */
-@keyframes confirmPulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.02); }
-    100% { transform: scale(1); }
-}
-
-.location-card {
-    animation: confirmPulse 2s ease-in-out infinite;
-}
-
-/* تحسين اللمس على الموبايل */
-@media (hover: none) {
-    .btn:hover {
-        transform: none;
-    }
-    
-    .btn:active {
-        transform: scale(0.98);
-    }
-    
-    .code-item:hover {
-        transform: none;
-    }
-    
-    .code-item:active {
-        transform: scale(0.95);
     }
 }
