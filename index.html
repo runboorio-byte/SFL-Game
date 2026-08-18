@@ -128,6 +128,36 @@
                 </div>
             </div>
 
+            <!-- شاشة التقاط الكنز -->
+            <div id="capture-screen" class="capture-screen hidden">
+                <div class="capture-content">
+                    <span class="capture-icon">⏳</span>
+                    <h1>وجدت الكنز!</h1>
+                    <p id="capture-team-name" class="capture-team"></p>
+                    <p class="capture-subtitle">هل تريد التقاط الكنز والفوز بالمباراة؟</p>
+                    <div class="capture-warning">
+                        <p>⚠️ سيظهر اسم فريقك كلفائز لدى جميع الفرق</p>
+                        <p>وستتوقف اللعبة لباقي الفرق</p>
+                    </div>
+                    <button id="btn-capture-treasure" class="btn btn-gold">⏰ التقط الكنز!</button>
+                </div>
+            </div>
+
+            <!-- شاشة انتهاء اللعبة -->
+            <div id="game-over-screen" class="game-over-screen hidden">
+                <div class="game-over-content">
+                    <span class="game-over-icon">🏁</span>
+                    <h1>اللعبة انتهت!</h1>
+                    <p class="game-over-subtitle">حصل على الكنز</p>
+                    <p id="winner-name-display" class="winner-name"></p>
+                    <div class="game-over-treasure">
+                        <p>الكنز: الساعة الرملية ⏳</p>
+                        <p>في غرفة المدير - الخزنة</p>
+                    </div>
+                    <button onclick="window.location.reload()" class="btn btn-primary">العودة للبداية</button>
+                </div>
+            </div>
+
             <!-- شاشة اللغز النهائي -->
             <div id="final-riddle-screen" class="hidden">
                 <div class="final-riddle-card">
@@ -149,6 +179,53 @@
                         <p id="final-error" class="error-text"></p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الأدمن -->
+    <div id="screen-admin" class="screen">
+        <div class="container">
+            <div class="admin-header">
+                <h1>🏆 لوحة التحكم</h1>
+                <p>تتبع الفرق وإدارة اللعبة</p>
+            </div>
+
+            <!-- حالة اللعبة -->
+            <div id="game-status" class="admin-game-status">
+                <h2>حالة اللعبة</h2>
+                <p id="status-text">اللعبة جارية...</p>
+                <p id="winner-display" class="winner-name" style="display: none;"></p>
+            </div>
+
+            <!-- بطاقات الفرق -->
+            <div id="teams-grid" class="admin-teams-grid"></div>
+
+            <!-- الأكواد والإجابات -->
+            <div class="admin-answers-section">
+                <h2>📋 جميع الإجابات والأكواد</h2>
+                <div id="answers-content"></div>
+            </div>
+
+            <!-- اللغز النهائي -->
+            <div class="admin-final-section">
+                <h2>⭐ اللغز النهائي - الإجابة</h2>
+                <p style="margin-bottom: 10px;">الأسئلة:</p>
+                <ol style="margin-right: 20px; margin-bottom: 15px; color: var(--text-dim);">
+                    <li>مركزك إذا تجاوزت الأول</li>
+                    <li>عدد أضلاع المثلث</li>
+                    <li>5 تفاحات - 3 مأكولة</li>
+                </ol>
+                <p>الإجابة:</p>
+                <div class="admin-final-answer">1 - 3 - 2</div>
+                <p style="margin-top: 15px; color: var(--text-dim);">الكنز: الساعة الرملية ⏳ في غرفة المدير - الخزنة</p>
+            </div>
+
+            <!-- أزرار التحكم -->
+            <div class="admin-controls">
+                <button id="btn-reset-game" class="btn btn-danger">🔄 إعادة تعيين اللعبة</button>
+                <button id="btn-refresh-admin" class="btn btn-primary">📊 تحديث البيانات</button>
+                <button id="btn-exit-admin" class="btn btn-exit">🚪 الخروج</button>
             </div>
         </div>
     </div>

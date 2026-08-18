@@ -953,3 +953,433 @@ body::before {
         opacity: 0;
     }
 }
+
+/* شاشة التقاط الكنز */
+.capture-screen {
+    text-align: center;
+}
+
+.capture-content {
+    background: var(--bg-card);
+    border: 2px solid var(--gold);
+    border-radius: 20px;
+    padding: 28px 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+.capture-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.capture-icon {
+    font-size: 80px;
+    display: block;
+    margin-bottom: 12px;
+    animation: capturePulse 1s ease-in-out infinite;
+    filter: drop-shadow(0 0 40px rgba(255, 215, 0, 0.6));
+}
+
+@keyframes capturePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+.capture-content h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--gold);
+    margin-bottom: 8px;
+}
+
+.capture-team {
+    font-size: 20px;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.capture-subtitle {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.capture-warning {
+    background: rgba(255, 51, 102, 0.1);
+    border: 1px solid rgba(255, 51, 102, 0.3);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 20px;
+}
+
+.capture-warning p {
+    color: var(--red);
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.capture-warning p:last-child {
+    margin-bottom: 0;
+}
+
+.btn-gold {
+    background: linear-gradient(135deg, var(--gold) 0%, #ffaa00 100%);
+    color: #000;
+    font-size: 18px;
+    font-weight: 900;
+    padding: 18px 32px;
+    box-shadow: 0 4px 30px var(--gold-glow);
+}
+
+.btn-gold:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 40px var(--gold-glow);
+}
+
+/* شاشة انتهاء اللعبة */
+.game-over-screen {
+    text-align: center;
+}
+
+.game-over-content {
+    background: var(--bg-card);
+    border: 2px solid var(--text-dim);
+    border-radius: 20px;
+    padding: 28px 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+.game-over-icon {
+    font-size: 72px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.game-over-content h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+.game-over-subtitle {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.winner-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--gold);
+    margin-bottom: 16px;
+}
+
+.game-over-treasure {
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.game-over-treasure p {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.game-over-treasure p:last-child {
+    margin-bottom: 0;
+}
+
+/* ===== لوحة التحكم الأدمن ===== */
+.admin-header {
+    text-align: center;
+    margin-bottom: 24px;
+    padding-top: 20px;
+}
+
+.admin-header h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 50%, #ffd700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+}
+
+.admin-header p {
+    color: var(--text-dim);
+    font-size: 14px;
+}
+
+/* حالة اللعبة */
+.admin-game-status {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.admin-game-status h2 {
+    color: var(--accent);
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.admin-game-status #status-text {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.admin-game-status .winner-name {
+    color: var(--gold);
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.admin-game-status.admin-winner {
+    border-color: var(--gold);
+    background: rgba(255, 215, 0, 0.05);
+}
+
+/* بطاقات الفرق */
+.admin-teams-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.admin-team-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    transition: all 0.3s ease;
+}
+
+.admin-team-card.admin-winner {
+    border-color: var(--gold);
+    background: rgba(255, 215, 0, 0.05);
+}
+
+.admin-team-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+}
+
+.admin-team-name {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.admin-team-code {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    color: var(--text-dim);
+}
+
+.admin-team-progress {
+    margin-top: 8px;
+}
+
+.admin-progress-bar {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.admin-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #00cc6a);
+    border-radius: 3px;
+    transition: width 0.5s ease;
+}
+
+.admin-progress-fill.admin-winner {
+    background: linear-gradient(90deg, var(--gold), #ffaa00);
+}
+
+.admin-station-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-dim);
+}
+
+.admin-current-station {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* قسم الإجابات */
+.admin-answers-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.admin-answers-section h2 {
+    color: var(--accent);
+    font-size: 16px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.admin-team-answers {
+    margin-bottom: 20px;
+}
+
+.admin-team-answers:last-child {
+    margin-bottom: 0;
+}
+
+.admin-team-answers h3 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+}
+
+.admin-answers-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.admin-answers-table th {
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--accent);
+    padding: 8px 6px;
+    text-align: right;
+    font-weight: 700;
+    border-bottom: 1px solid var(--border);
+}
+
+.admin-answers-table td {
+    padding: 8px 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--text-dim);
+}
+
+.admin-answers-table strong {
+    color: var(--text);
+}
+
+.admin-answer-code {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--gold) !important;
+    font-weight: 700;
+    direction: ltr;
+}
+
+/* قسم اللغز النهائي */
+.admin-final-section {
+    background: var(--bg-card);
+    border: 1px solid var(--gold);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.admin-final-section h2 {
+    color: var(--gold);
+    font-size: 16px;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.admin-final-answer {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--gold);
+    text-align: center;
+    padding: 12px;
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    direction: ltr;
+}
+
+/* أزرار التحكم */
+.admin-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, var(--red) 0%, #cc1144 100%);
+    color: white;
+    box-shadow: 0 4px 20px rgba(255, 51, 102, 0.3);
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255, 51, 102, 0.4);
+}
+
+.btn-exit {
+    background: linear-gradient(135deg, #666 0%, #444 100%);
+    color: white;
+    grid-column: span 2;
+}
+
+.btn-exit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(100, 100, 100, 0.3);
+}
+
+/* تجاوب الأدمن */
+@media (max-width: 480px) {
+    .admin-header h1 {
+        font-size: 24px;
+    }
+
+    .admin-controls {
+        grid-template-columns: 1fr;
+    }
+
+    .btn-exit {
+        grid-column: span 1;
+    }
+
+    .admin-answers-table {
+        font-size: 11px;
+    }
+
+    .admin-answers-table th,
+    .admin-answers-table td {
+        padding: 6px 4px;
+    }
+}

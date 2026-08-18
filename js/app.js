@@ -2,13 +2,27 @@
 const Game = {
     // حالة اللعبة
     currentTeam: null,
+    currentTeamCode: null,
     currentStation: 0,
     startTime: null,
     isLastStation: false,
 
+    // الكود السري
+    ADMIN_SECRET_CODE: "ADMIN5050",
+
+    // بيانات الفرق
+    TEAMS_DATA: {
+        "KING1": { name: "الفريق الأصفر", color: "#FFD700" },
+        "BLUE2": { name: "الفريق الأزرق", color: "#4169E1" },
+        "RED3": { name: "الفريق الأحمر", color: "#DC143C" },
+        "GREEN4": { name: "الفريق الأخضر", color: "#32CD32" },
+        "STAR5": { name: "فريق النجم", color: "#9370DB" }
+    },
+
     // تهيئة اللعبة
     init() {
         this.bindEvents();
+        this.checkGameStatus();
         UI.showScreen('screen-start');
     },
 
@@ -73,12 +87,56 @@ const Game = {
         document.getElementById('btn-play-again').addEventListener('click', () => {
             this.resetGame();
         });
+
+        // زر تم الكنز
+        document.getElementById('btn-capture-treasure').addEventListener('click', () => {
+            this.captureTreasure();
+        });
+
+        // أزرار الأدمن
+        document.getElementById('btn-reset-game').addEventListener('click', () => {
+            this.resetGame();
+        });
+
+        document.getElementById('btn-refresh-admin').addEventListener('click', () => {
+            this.refreshAdminPanel();
+        });
+
+        document.getElementById('btn-exit-admin').addEventListener('click', () => {
+            UI.showScreen('screen-start');
+            document.getElementById('team-code').value = '';
+        });
+    },
+
+    // التحقق من حالة اللعبة
+    checkGameStatus() {
+        const winner = localStorage.getItem('gameWinner');
+        if (winner) {
+            // هناك فائز بالفعل
+            setTimeout(() => {
+                UI.showGameOver(winner);
+            }, 500);
+        }
     },
 
     // بدء اللعبة
     startGame() {
         const code = document.getElementById('team-code').value.trim().toUpperCase();
         
+        // التحقق من الكود السري
+        if (code === this.ADMIN_SECRET_CODE) {
+            UI.showScreen('screen-admin');
+            this.refreshAdminPanel();
+            return;
+        }
+
+        // التحقق من وجود فائز
+        const winner = localStorage.getItem('gameWinner');
+        if (winner) {
+            UI.showError('error-msg', 'اللعبة انتهت! هناك فائز بالفعل.');
+            return;
+        }
+
         if (!code) {
             UI.showError('error-msg', 'الرجاء إدخال كود الفريق');
             return;
@@ -90,15 +148,21 @@ const Game = {
         }
 
         this.currentTeam = GAME_DATA.teams[code];
-        this.currentStation = 0;
+        this.currentTeamCode = code;
+        this.currentStation = parseInt(localStorage.getItem(`team_${code}_progress`) || '0');
         this.startTime = Date.now();
-        this.isLastStation = false;
 
         // تحديث واجهة المستخدم
         UI.updateTeamName(this.currentTeam.name, this.currentTeam.color);
-        UI.updateProgress(0, this.currentTeam.stations.length);
+        UI.updateProgress(this.currentStation, this.currentTeam.stations.length);
         UI.showScreen('screen-game');
-        UI.showRiddle(this.currentTeam.stations[0]);
+
+        // التحقق من وصل الفريق للغز نهائي
+        if (this.currentStation >= this.currentTeam.stations.length) {
+            UI.showFinalRiddle(GAME_DATA.finalRiddle);
+        } else {
+            UI.showRiddle(this.currentTeam.stations[this.currentStation]);
+        }
     },
 
     // التحقق من الإجابة
@@ -140,6 +204,10 @@ const Game = {
 
         if (userCode === correctCode) {
             this.currentStation++;
+            
+            // حفظ التقدم
+            localStorage.setItem(`team_${this.currentTeamCode}_progress`, this.currentStation);
+            
             UI.updateProgress(this.currentStation, this.currentTeam.stations.length);
 
             // التحقق من الوصول للمحطة الأخيرة
@@ -163,6 +231,13 @@ const Game = {
 
     // التحقق من الإجابة النهائية
     checkFinalAnswer() {
+        // التحقق من وجود فائز
+        const winner = localStorage.getItem('gameWinner');
+        if (winner) {
+            UI.showError('final-error', 'اللعبة انتهت! هناك فائز بالفعل.');
+            return;
+        }
+
         const digit1 = document.getElementById('final-digit-1').value.trim();
         const digit2 = document.getElementById('final-digit-2').value.trim();
         const digit3 = document.getElementById('final-digit-3').value.trim();
@@ -185,23 +260,8 @@ const Game = {
         }
 
         if (isCorrect) {
-            // حساب وقت الإنجاز
-            const endTime = Date.now();
-            const timeDiff = endTime - this.startTime;
-            const minutes = Math.floor(timeDiff / 60000);
-            const seconds = Math.floor((timeDiff % 60000) / 1000);
-            const timeString = `${minutes} دقيقة و ${seconds} ثانية`;
-
-            // عرض شاشة الفوز
-            UI.celebrate();
-            setTimeout(() => {
-                UI.toggleElement('final-riddle-screen', false);
-                UI.showWinScreen(
-                    this.currentTeam.name,
-                    GAME_DATA.finalRiddle.treasureLocation,
-                    timeString
-                );
-            }, 1500);
+            // عرض شاشة الفوز مع زر الكنز
+            UI.showCaptureScreen(this.currentTeam.name);
         } else {
             UI.showError('final-error', GAME_DATA.messages.finalWrong);
             UI.shake('final-digit-1');
@@ -210,6 +270,29 @@ const Game = {
             document.getElementById('final-digit-3').value = '';
             document.getElementById('final-digit-1').focus();
         }
+    },
+
+    // التقاط الكنز
+    captureTreasure() {
+        // حفظ الفائز
+        localStorage.setItem('gameWinner', this.currentTeamCode);
+        
+        // حساب وقت الإنجاز
+        const endTime = Date.now();
+        const timeDiff = endTime - this.startTime;
+        const minutes = Math.floor(timeDiff / 60000);
+        const seconds = Math.floor((timeDiff % 60000) / 1000);
+        const timeString = `${minutes} دقيقة و ${seconds} ثانية`;
+
+        // عرض شاشة الفوز
+        UI.celebrate();
+        setTimeout(() => {
+            UI.showWinScreen(
+                this.currentTeam.name,
+                GAME_DATA.finalRiddle.treasureLocation,
+                timeString
+            );
+        }, 1500);
     },
 
     // تطبيع الإجابة للمقارنة
@@ -222,15 +305,123 @@ const Game = {
 
     // إعادة تعيين اللعبة
     resetGame() {
-        this.currentTeam = null;
-        this.currentStation = 0;
-        this.startTime = null;
-        this.isLastStation = false;
-        
-        document.getElementById('team-code').value = '';
-        document.getElementById('error-msg').classList.remove('show');
-        
-        UI.showScreen('screen-start');
+        if (confirm('هل أنت متأكد من إعادة تعيين اللعبة؟ سيتم مسح جميع التقدم.')) {
+            localStorage.removeItem('gameWinner');
+            Object.keys(this.TEAMS_DATA).forEach(code => {
+                localStorage.removeItem(`team_${code}_progress`);
+            });
+            this.currentTeam = null;
+            this.currentTeamCode = null;
+            this.currentStation = 0;
+            this.startTime = null;
+            this.isLastStation = false;
+            
+            document.getElementById('team-code').value = '';
+            document.getElementById('error-msg').classList.remove('show');
+            
+            UI.showScreen('screen-start');
+        }
+    },
+
+    // تحديث لوحة الأدمن
+    refreshAdminPanel() {
+        this.updateGameStatus();
+        this.updateTeamsCards();
+        this.updateAnswersSection();
+    },
+
+    // تحديث حالة اللعبة
+    updateGameStatus() {
+        const winner = localStorage.getItem('gameWinner');
+        const statusEl = document.getElementById('game-status');
+        const statusText = document.getElementById('status-text');
+        const winnerDisplay = document.getElementById('winner-display');
+
+        if (winner) {
+            statusEl.classList.add('admin-winner');
+            statusText.textContent = '🏆 اللعبة انتهت!';
+            winnerDisplay.style.display = 'block';
+            winnerDisplay.textContent = this.TEAMS_DATA[winner]?.name || winner;
+        } else {
+            statusEl.classList.remove('admin-winner');
+            statusText.textContent = 'اللعبة جارية...';
+            winnerDisplay.style.display = 'none';
+        }
+    },
+
+    // تحديث بطاقات الفرق
+    updateTeamsCards() {
+        const grid = document.getElementById('teams-grid');
+        const winner = localStorage.getItem('gameWinner');
+        grid.innerHTML = '';
+
+        Object.keys(this.TEAMS_DATA).forEach(teamCode => {
+            const team = this.TEAMS_DATA[teamCode];
+            const progress = parseInt(localStorage.getItem(`team_${teamCode}_progress`) || '0');
+            const isWinner = winner === teamCode;
+            
+            const percentage = (progress / 5) * 100;
+            const stationText = progress >= 5 ? 'اللغز النهائي' : `المحطة ${progress + 1} من 5`;
+
+            const card = document.createElement('div');
+            card.className = `admin-team-card ${isWinner ? 'admin-winner' : ''}`;
+            card.innerHTML = `
+                <div class="admin-team-header" style="border-color: ${team.color}">
+                    <span class="admin-team-name" style="color: ${team.color}">${team.name}</span>
+                    <span class="admin-team-code">${teamCode}</span>
+                </div>
+                <div class="admin-team-progress">
+                    <div class="admin-progress-bar">
+                        <div class="admin-progress-fill ${isWinner ? 'admin-winner' : ''}" style="width: ${percentage}%"></div>
+                    </div>
+                    <div class="admin-station-info">
+                        <span class="admin-current-station">${stationText}</span>
+                        <span>${isWinner ? '🏆 فائز!' : `${progress}/5`}</span>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    },
+
+    // تحديث قسم الإجابات
+    updateAnswersSection() {
+        const content = document.getElementById('answers-content');
+        content.innerHTML = '';
+
+        Object.keys(GAME_DATA.teams).forEach(teamCode => {
+            const team = this.TEAMS_DATA[teamCode];
+            const stations = GAME_DATA.teams[teamCode].stations;
+
+            const teamDiv = document.createElement('div');
+            teamDiv.className = 'admin-team-answers';
+            teamDiv.innerHTML = `
+                <h3 style="color: ${team.color}">${team.name} (${teamCode})</h3>
+                <table class="admin-answers-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>اللغز</th>
+                            <th>الإجابة</th>
+                            <th>المكان</th>
+                            <th>الكود</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${stations.map((s, i) => `
+                            <tr>
+                                <td>${i + 1}</td>
+                                <td>${s.riddle}</td>
+                                <td><strong>${s.answer}</strong></td>
+                                <td>${s.location}</td>
+                                <td class="admin-answer-code">${s.code}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            content.appendChild(teamDiv);
+        });
     }
 };
 

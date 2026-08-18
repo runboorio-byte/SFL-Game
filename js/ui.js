@@ -70,6 +70,8 @@ const UI = {
         this.toggleElement('riddle-card', true);
         this.toggleElement('location-card', false);
         this.toggleElement('final-riddle-screen', false);
+        this.toggleElement('capture-screen', false);
+        this.toggleElement('game-over-screen', false);
     },
 
     // عرض الموقع
@@ -79,6 +81,18 @@ const UI = {
         this.toggleElement('riddle-card', false);
         this.toggleElement('location-card', true);
         this.toggleElement('final-riddle-screen', false);
+        this.toggleElement('capture-screen', false);
+        this.toggleElement('game-over-screen', false);
+    },
+
+    // عرض شاشة التقاط الكنز
+    showCaptureScreen(teamName) {
+        document.getElementById('capture-team-name').textContent = teamName;
+        this.toggleElement('riddle-card', false);
+        this.toggleElement('location-card', false);
+        this.toggleElement('final-riddle-screen', false);
+        this.toggleElement('capture-screen', true);
+        this.toggleElement('game-over-screen', false);
     },
 
     // عرض شاشة الفوز
@@ -89,8 +103,22 @@ const UI = {
         this.toggleElement('riddle-card', false);
         this.toggleElement('location-card', false);
         this.toggleElement('final-riddle-screen', false);
+        this.toggleElement('capture-screen', false);
+        this.toggleElement('game-over-screen', false);
         this.toggleElement('screen-win', false);
         document.getElementById('screen-win').classList.remove('hidden');
+    },
+
+    // عرض شاشة انتهاء اللعبة
+    showGameOver(winnerCode) {
+        const winnerName = GAME_DATA.teams[winnerCode]?.name || winnerCode;
+        document.getElementById('winner-name-display').textContent = winnerName;
+        this.showScreen('screen-game');
+        this.toggleElement('riddle-card', false);
+        this.toggleElement('location-card', false);
+        this.toggleElement('final-riddle-screen', false);
+        this.toggleElement('capture-screen', false);
+        this.toggleElement('game-over-screen', true);
     },
 
     // عرض اللغز النهائي
@@ -99,6 +127,8 @@ const UI = {
         this.toggleElement('riddle-card', false);
         this.toggleElement('location-card', false);
         this.toggleElement('final-riddle-screen', true);
+        this.toggleElement('capture-screen', false);
+        this.toggleElement('game-over-screen', false);
         document.getElementById('final-digit-1').value = '';
         document.getElementById('final-digit-2').value = '';
         document.getElementById('final-digit-3').value = '';
