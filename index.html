@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة الكنز</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- شاشة البداية -->
+    <div id="screen-start" class="screen active">
+        <div class="container">
+            <div class="logo">
+                <span class="treasure-icon">🏆</span>
+                <h1>لعبة الكنز</h1>
+                <p class="subtitle">ابحث عن الكنز قبل أن يسبقك أحد!</p>
+            </div>
+            <div class="login-box">
+                <label for="team-code">أدخل كود فريقك</label>
+                <input type="text" id="team-code" placeholder="مثال: KING1" maxlength="10" autocomplete="off">
+                <button id="btn-start" class="btn btn-primary">ابدأ اللعب</button>
+                <p id="error-msg" class="error-text"></p>
+            </div>
+            <div class="team-info">
+                <h3>أكواد الفرق:</h3>
+                <div class="codes-grid">
+                    <div class="code-item" style="--team-color: #FFD700">
+                        <span class="code">KING1</span>
+                        <span class="name">الملوك</span>
+                    </div>
+                    <div class="code-item" style="--team-color: #4169E1">
+                        <span class="code">BLUE2</span>
+                        <span class="name">الأزرق</span>
+                    </div>
+                    <div class="code-item" style="--team-color: #DC143C">
+                        <span class="code">RED3</span>
+                        <span class="name">الأحمر</span>
+                    </div>
+                    <div class="code-item" style="--team-color: #32CD32">
+                        <span class="code">GREEN4</span>
+                        <span class="name">الأخضر</span>
+                    </div>
+                    <div class="code-item" style="--team-color: #9370DB">
+                        <span class="code">STAR5</span>
+                        <span class="name">النجم</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة اللعب -->
+    <div id="screen-game" class="screen">
+        <div class="container">
+            <!-- شريط التقدم -->
+            <div class="progress-bar">
+                <div class="progress-info">
+                    <span id="team-name-display"></span>
+                    <span id="station-counter">المحطة 1 من 5</span>
+                </div>
+                <div class="progress-track">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                <div class="station-dots">
+                    <span class="dot active" data-station="1">1</span>
+                    <span class="dot" data-station="2">2</span>
+                    <span class="dot" data-station="3">3</span>
+                    <span class="dot" data-station="4">4</span>
+                    <span class="dot" data-station="5">5</span>
+                    <span class="dot dot-final" data-station="final">★</span>
+                </div>
+            </div>
+
+            <!-- بطاقة اللغز -->
+            <div id="riddle-card" class="riddle-card">
+                <div class="card-header">
+                    <span id="station-number" class="station-badge">1</span>
+                    <h2 id="riddle-title">اللغز</h2>
+                </div>
+                <div class="card-body">
+                    <p id="riddle-text" class="riddle-text"></p>
+                    <div class="answer-section">
+                        <input type="text" id="riddle-answer" placeholder="أدخل إجابتك..." autocomplete="off">
+                        <button id="btn-check-answer" class="btn btn-check">تحقق</button>
+                    </div>
+                    <p id="answer-error" class="error-text"></p>
+                    <p id="answer-success" class="success-text"></p>
+                </div>
+            </div>
+
+            <!-- بطاقة الموقع -->
+            <div id="location-card" class="location-card hidden">
+                <div class="card-header">
+                    <span class="check-icon">✓</span>
+                    <h2>إجابة صحيحة!</h2>
+                </div>
+                <div class="card-body">
+                    <p class="location-instruction">اذهب إلى:</p>
+                    <p id="location-name" class="location-name"></p>
+                    <p class="code-instruction">عند الوصول، ابحث عن ورقة بها الكود وأدخله:</p>
+                    <div class="code-input-section">
+                        <input type="text" id="station-code" placeholder="أدخل الكود" maxlength="6" autocomplete="off">
+                        <button id="btn-check-code" class="btn btn-check">تأكيد</button>
+                    </div>
+                    <p id="code-error" class="error-text"></p>
+                </div>
+            </div>
+
+            <!-- شاشة الفوز -->
+            <div id="screen-win" class="win-screen hidden">
+                <div class="win-content">
+                    <span class="win-icon">🏆</span>
+                    <h1>مبروك!</h1>
+                    <p id="win-team-name" class="win-team"></p>
+                    <p>وصلت إلى الكنز!</p>
+                    <div class="treasure-location">
+                        <p>الساعة الرملية في:</p>
+                        <p id="treasure-place" class="treasure-place"></p>
+                    </div>
+                    <div class="completion-time">
+                        <p>وقت الإنجاز:</p>
+                        <p id="completion-time" class="time-display"></p>
+                    </div>
+                    <button id="btn-play-again" class="btn btn-primary">لعبة جديدة</button>
+                </div>
+            </div>
+
+            <!-- شاشة اللغز النهائي -->
+            <div id="final-riddle-screen" class="hidden">
+                <div class="final-riddle-card">
+                    <div class="card-header final-header">
+                        <span class="final-badge">★</span>
+                        <h2>لغز الكنز النهائي</h2>
+                    </div>
+                    <div class="card-body">
+                        <p class="final-instruction">حل هذا اللغز لتجد مكان الكنز</p>
+                        <div id="final-riddle-text" class="riddle-text final-text"></div>
+                        <div class="final-answer-section">
+                            <div class="answer-inputs">
+                                <input type="text" id="final-digit-1" maxlength="2" class="digit-input" data-index="0">
+                                <input type="text" id="final-digit-2" maxlength="2" class="digit-input" data-index="1">
+                                <input type="text" id="final-digit-3" maxlength="2" class="digit-input" data-index="2">
+                            </div>
+                            <button id="btn-check-final" class="btn btn-primary btn-final">فتح الكنز</button>
+                        </div>
+                        <p id="final-error" class="error-text"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
