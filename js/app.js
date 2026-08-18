@@ -110,6 +110,7 @@ const Game = {
         });
 
         document.getElementById('btn-exit-admin').addEventListener('click', () => {
+            this.stopAutoRefresh();
             UI.showScreen('screen-start');
             document.getElementById('team-code').value = '';
         });
@@ -124,6 +125,31 @@ const Game = {
         }
     },
 
+    // بدء مراقبة الفائز (للفرق أثناء اللعب)
+    startWinnerWatch() {
+        // إيقاف أي مراقبة سابقة
+        if (this.winnerWatchInterval) {
+            clearInterval(this.winnerWatchInterval);
+        }
+        // فحص كل ثانيتين
+        this.winnerWatchInterval = setInterval(() => {
+            const winner = localStorage.getItem('gameWinner');
+            if (winner && this.currentTeamCode && winner !== this.currentTeamCode) {
+                // فاز فريق آخر - إيقاف المراقبة وإظهار شاشة انتهاء اللعبة
+                this.stopWinnerWatch();
+                UI.showGameOver(winner);
+            }
+        }, 2000);
+    },
+
+    // إيقاف مراقبة الفائز
+    stopWinnerWatch() {
+        if (this.winnerWatchInterval) {
+            clearInterval(this.winnerWatchInterval);
+            this.winnerWatchInterval = null;
+        }
+    },
+
     // بدء اللعبة
     startGame() {
         const code = document.getElementById('team-code').value.trim().toUpperCase();
@@ -132,6 +158,7 @@ const Game = {
         if (code === this.ADMIN_SECRET_CODE) {
             UI.showScreen('screen-admin');
             this.refreshAdminPanel();
+            this.startAutoRefresh();
             return;
         }
 
@@ -156,6 +183,9 @@ const Game = {
         this.currentTeamCode = code;
         this.currentStation = parseInt(localStorage.getItem(`team_${code}_progress`) || '0');
         this.startTime = Date.now();
+
+        // بدء مراقبة الفائز
+        this.startWinnerWatch();
 
         // تحديث واجهة المستخدم
         UI.updateTeamName(this.currentTeam.name, this.currentTeam.color);
@@ -279,6 +309,9 @@ const Game = {
 
     // التقاط الكنز
     captureTreasure() {
+        // إيقاف مراقبة الفائز
+        this.stopWinnerWatch();
+        
         // حفظ الفائز
         localStorage.setItem('gameWinner', this.currentTeamCode);
         
@@ -311,6 +344,8 @@ const Game = {
     // إعادة تعيين اللعبة
     resetGame() {
         if (confirm('هل أنت متأكد من إعادة تعيين اللعبة؟ سيتم مسح جميع التقدم.')) {
+            this.stopAutoRefresh();
+            this.stopWinnerWatch();
             localStorage.removeItem('gameWinner');
             Object.keys(this.TEAMS_DATA).forEach(code => {
                 localStorage.removeItem(`team_${code}_progress`);
@@ -333,6 +368,28 @@ const Game = {
         this.updateGameStatus();
         this.updateTeamsCards();
         this.updateAnswersSection();
+    },
+
+    // بدء التحديث التلقائي
+    startAutoRefresh() {
+        // إيقاف أي تحديث سابق
+        if (this.autoRefreshInterval) {
+            clearInterval(this.autoRefreshInterval);
+        }
+        // تحديث كل 3 ثواني
+        this.autoRefreshInterval = setInterval(() => {
+            if (document.getElementById('screen-admin').classList.contains('active')) {
+                this.refreshAdminPanel();
+            }
+        }, 3000);
+    },
+
+    // إيقاف التحديث التلقائي
+    stopAutoRefresh() {
+        if (this.autoRefreshInterval) {
+            clearInterval(this.autoRefreshInterval);
+            this.autoRefreshInterval = null;
+        }
     },
 
     // تحديث حالة اللعبة

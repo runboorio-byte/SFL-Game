@@ -1383,3 +1383,20 @@ body::before {
         padding: 6px 4px;
     }
 }
+
+/* معلومات التحديث التلقائي */
+.admin-auto-refresh {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 20px;
+    background: rgba(0, 255, 136, 0.05);
+    border: 1px solid rgba(0, 255, 136, 0.2);
+    border-radius: 10px;
+}
+
+.admin-auto-refresh p {
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0;
+}

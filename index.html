@@ -135,6 +135,10 @@
                     <h1>وجدت الكنز!</h1>
                     <p id="capture-team-name" class="capture-team"></p>
                     <p class="capture-subtitle">هل تريد التقاط الكنز والفوز بالمباراة؟</p>
+                    <div class="treasure-location">
+                        <p>الكنز في</p>
+                        <p class="treasure-place">الساعة الرملية ⏳ موجودة في غرفة المدير - الخزنة</p>
+                    </div>
                     <div class="capture-warning">
                         <p>⚠️ سيظهر اسم فريقك كلفائز لدى جميع الفرق</p>
                         <p>وستتوقف اللعبة لباقي الفرق</p>
@@ -150,10 +154,6 @@
                     <h1>اللعبة انتهت!</h1>
                     <p class="game-over-subtitle">حصل على الكنز</p>
                     <p id="winner-name-display" class="winner-name"></p>
-                    <div class="game-over-treasure">
-                        <p>الكنز: الساعة الرملية ⏳</p>
-                        <p>في غرفة المدير - الخزنة</p>
-                    </div>
                     <button onclick="window.location.reload()" class="btn btn-primary">العودة للبداية</button>
                     <button id="btn-exit-gameover" class="btn btn-exit" style="margin-top: 10px;">🚪 الخروج</button>
                 </div>
@@ -227,6 +227,11 @@
                 <button id="btn-reset-game" class="btn btn-danger">🔄 إعادة تعيين اللعبة</button>
                 <button id="btn-refresh-admin" class="btn btn-primary">📊 تحديث البيانات</button>
                 <button id="btn-exit-admin" class="btn btn-exit">🚪 الخروج</button>
+            </div>
+            
+            <!-- معلومات التحديث التلقائي -->
+            <div class="admin-auto-refresh">
+                <p>🔄 التحديث التلقائي: كل 3 ثواني</p>
             </div>
         </div>
     </div>
